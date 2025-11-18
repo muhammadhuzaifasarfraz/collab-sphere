@@ -3,7 +3,10 @@ pipeline {
     agent any
 
     environment {
-        // *** UPDATED DOCKER HUB USERNAME ***
+        // *** CRITICAL FIX FOR WSL 2 DOCKER DESKTOP CONNECTION ***
+        DOCKER_HOST = 'unix:///mnt/wsl/docker-desktop/cli.sock'
+        
+        // Docker Hub Username
         DOCKER_HUB_USER = 'chhuzaifamayo'
         // Set a tag based on the commit short hash for unique image versions
         IMAGE_TAG = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
@@ -43,7 +46,6 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Applying Kubernetes manifests with new image tag: ${IMAGE_TAG}" 
-                // Assumes kubectl is configured and images are set to 'latest' or dynamically tagged
                 sh "kubectl apply -f k8s/"
             }
         }
