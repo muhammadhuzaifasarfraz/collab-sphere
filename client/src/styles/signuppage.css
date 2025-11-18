@@ -1,0 +1,239 @@
+.signup-page {
+  min-height: 100vh;
+  background: #f0f2f5;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  position: relative;
+}
+
+.signup-container {
+  max-width: 480px;
+  width: 100%;
+  padding: 40px;
+  border-radius: 16px;
+  background: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  font-family: 'Segoe UI', Arial, sans-serif;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.signup-container:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.signup-container h2 {
+  font-size: 32px;
+  font-weight: 700;
+  color: #1877f2;
+  margin-bottom: 8px;
+  letter-spacing: -0.5px;
+}
+
+.subtitle {
+  font-size: 16px;
+  color: #65676b;
+  margin-bottom: 32px;
+}
+
+.signup-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.signup-form input,
+.signup-form select {
+  width: 100%;
+  padding: 14px 16px;
+  border-radius: 8px;
+  border: 1.5px solid #e4e6eb;
+  font-size: 15px;
+  transition: all 0.2s ease;
+  background-color: #f8fafc;
+  color: #1c1e21;
+}
+
+.signup-form input:focus,
+.signup-form select:focus {
+  outline: none;
+  border-color: #1877f2;
+  box-shadow: 0 0 0 2px rgba(24, 119, 242, 0.2);
+  background-color: #fff;
+}
+
+.signup-form input::placeholder {
+  color: #8a8d91;
+}
+
+.form-section-title {
+  text-align: left;
+  color: #1877f2;
+  font-weight: 600;
+  font-size: 14px;
+  margin: 8px 0 4px;
+}
+
+.role-selection select,
+.student-fields select,
+.alumni-fields select,
+.passing-year-select {
+  background: #f8fafc url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'></polyline></svg>") no-repeat right 12px center;
+  background-size: 16px;
+  appearance: none;
+  padding-right: 40px;
+}
+
+.student-fields,
+.alumni-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 4px;
+}
+
+.submit-button {
+  padding: 14px;
+  background-color: #1877f2;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 8px;
+  position: relative;
+  overflow: hidden;
+}
+
+.submit-button:hover {
+  background-color: #166fe5;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(24, 119, 242, 0.3);
+}
+
+.submit-button:active {
+  transform: translateY(0);
+}
+
+.submit-button:disabled {
+  background-color: #e4e6eb;
+  color: #bcc0c4;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.submit-button.loading {
+  padding-left: 40px;
+}
+
+.submit-button.loading::before {
+  content: '';
+  position: absolute;
+  left: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: translateY(-50%) rotate(360deg);
+  }
+}
+
+.divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  color: #96999e;
+  font-size: 14px;
+  margin: 20px 0;
+}
+
+.divider::before,
+.divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #dadde1;
+}
+
+.divider::before {
+  margin-right: 10px;
+}
+
+.divider::after {
+  margin-left: 10px;
+}
+
+.login-link {
+  color: #65676b;
+  font-size: 14px;
+  margin-top: 4px;
+}
+
+.login-link a {
+  color: #1877f2;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .signup-container {
+    padding: 30px;
+  }
+  
+  .signup-form input,
+  .signup-form select {
+    padding: 12px 14px;
+    font-size: 14px;
+  }
+  
+  .submit-button {
+    padding: 12px;
+    font-size: 15px;
+  }
+  
+  .student-fields,
+  .alumni-fields {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-container {
+    box-shadow: none;
+    max-width: 100%;
+  }
+  
+  .signup-page {
+    padding: 10px;
+  }
+}

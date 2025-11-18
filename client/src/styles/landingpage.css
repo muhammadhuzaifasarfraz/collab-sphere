@@ -1,0 +1,107 @@
+/* styles/landingpage.css */
+
+.landing-container {
+  min-height: calc(100vh - 60px); /* Account for navbar height */
+  background: white; /* Keep the landing page white */
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.landing-header {
+  text-align: center;
+  padding: 50px 20px 20px;
+  color: #333;
+}
+
+.landing-header h1 {
+  font-size: 2.5rem;
+  color: #2575fc; /* Keep your blue branding */
+}
+
+.landing-header p {
+  margin-top: 10px;
+  font-size: 1.2rem;
+  color: #555;
+}
+
+.cta-buttons {
+  margin-top: 20px;
+}
+
+.cta-buttons .btn {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 12px 28px;
+  font-size: 16px;
+  border-radius: 8px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.cta-buttons .btn.login {
+  background-color: #2575fc;
+  color: #fff;
+}
+
+.cta-buttons .btn.login:hover {
+  background-color: #1a5bd6;
+}
+
+.cta-buttons .btn.signup {
+  background-color: white;
+  color: #2575fc;
+  border: 2px solid #2575fc;
+}
+
+.cta-buttons .btn.signup:hover {
+  background-color: #2575fc;
+  color: white;
+}
+
+.features-section {
+  padding: 50px 20px;
+  text-align: center;
+}
+
+.features-section h2 {
+  font-size: 2rem;
+  color: #333;
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.feature-box {
+  background: #f1f5f9;
+  padding: 20px;
+  width: 220px;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  text-align: center;
+}
+
+.feature-box h3 {
+  margin-bottom: 10px;
+  font-size: 1.2rem;
+  color: #2575fc;
+}
+
+.feature-box p {
+  font-size: 0.95rem;
+  color: #555;
+}
+
+.landing-footer {
+  text-align: center;
+  padding: 20px;
+  font-size: 14px;
+  color: #777;
+  background-color: #f9fafb;
+}
