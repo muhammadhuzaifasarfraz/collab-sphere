@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  server:
+    build:
+      context: ./server
+      dockerfile: Dockerfile
+    # Explicitly name the built image for clarity (optional, but good practice)
+    image: chhuzaifamayo/collab-server:latest 
+    container_name: collab-server
+    ports:
+      - "5000:5000"
+    environment:
+      NODE_ENV: production
+      # ADD YOUR DATABASE/SECRET ENVIRONMENT VARIABLES HERE!
+    restart: always
+
+  client:
+    build:
+      context: ./client
+      dockerfile: Dockerfile
+    # Explicitly name the built image
+    image: chhuzaifamayo/collab-client:latest
+    container_name: collab-client
+    ports:
+      - "3000:80"
+    depends_on:
+      - server
+    restart: always

@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: collab-client-service
+spec:
+  selector:
+    app: collab-client
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      # The NodePort range is 30000-32767. Kubernetes will assign one if you don't specify.
+      # You'll access the app via http://<your-node-ip>:<node-port>
+      nodePort: 30080
+  type: NodePort
