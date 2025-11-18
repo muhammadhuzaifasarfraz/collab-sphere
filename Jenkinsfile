@@ -3,9 +3,9 @@ pipeline {
     agent any
 
     environment {
-        // FINAL FIX: Using TCP port exposed by Docker Desktop to bypass
-        // persistent Unix socket permission issues in WSL 2.
-        DOCKER_HOST = 'tcp://localhost:2375'
+        // DEFINITIVE FIX: Using the Windows Host IP (192.168.208.1)
+        // This is necessary because 'localhost' fails due to network routing/firewall issues in WSL.
+        DOCKER_HOST = 'tcp://192.168.208.1:2375'
         
         DOCKER_HUB_USER = 'chhuzaifamayo'
         // Uses the commit short hash for unique image tagging
@@ -44,14 +44,12 @@ pipeline {
         stage('Deploy to Kubernetes') {
             steps {
                 echo "Applying Kubernetes manifests with new image tag: ${IMAGE_TAG}" 
-                // Assumes kubectl is installed and configured to connect to Docker Desktop's Kubernetes
                 sh "kubectl apply -f k8s/"
             }
         }
         
         stage('Test Deployment (Manual/Basic Check)') {
              steps {
-                 // Check if the deployments rolled out successfully
                  sh "kubectl rollout status deployment/collab-server-deployment"
                  sh "kubectl rollout status deployment/collab-client-deployment"
              }
