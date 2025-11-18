@@ -3,9 +3,9 @@ pipeline {
     agent any
 
     environment {
-        # *** UPDATED DOCKER HUB USERNAME ***
+        // *** UPDATED DOCKER HUB USERNAME ***
         DOCKER_HUB_USER = 'chhuzaifamayo'
-        # Set a tag based on the commit short hash for unique image versions
+        // Set a tag based on the commit short hash for unique image versions
         IMAGE_TAG = sh(returnStdout: true, script: 'git rev-parse --short HEAD').trim()
     }
 
@@ -13,6 +13,7 @@ pipeline {
         stage('Build & Push Server Image') {
             steps {
                 script {
+                    // Docker login requires credentials
                     withCredentials([usernamePassword(credentialsId: 'docker-hub-creds', passwordVariable: 'DOCKER_PASSWORD', usernameVariable: 'DOCKER_USERNAME')]) {
                         sh "docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}"
                         
@@ -29,6 +30,7 @@ pipeline {
         stage('Build & Push Client Image') {
             steps {
                 script {
+                    // Client image can be pushed without re-logging in
                     sh "docker build -t ${DOCKER_HUB_USER}/collab-client:${IMAGE_TAG} ./client"
                     sh "docker push ${DOCKER_HUB_USER}/collab-client:${IMAGE_TAG}"
                     
@@ -40,16 +42,18 @@ pipeline {
 
         stage('Deploy to Kubernetes') {
             steps {
-                echo "Applying Kubernetes manifests with new image tag: ${IMAGE_TAG}"                
+                echo "Applying Kubernetes manifests with new image tag: ${IMAGE_TAG}" 
+                // Assumes kubectl is configured and images are set to 'latest' or dynamically tagged
                 sh "kubectl apply -f k8s/"
             }
         }
         
         stage('Test Deployment (Manual/Basic Check)') {
              steps {
+                 // Check if the deployments rolled out successfully
                  sh "kubectl rollout status deployment/collab-server-deployment"
                  sh "kubectl rollout status deployment/collab-client-deployment"
              }
-         }
+        }
     }
 }
