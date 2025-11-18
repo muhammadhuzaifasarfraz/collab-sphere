@@ -1,0 +1,43 @@
+# Deployment for the React Frontend Client (Nginx serving static files)
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collab-client-deployment
+  labels:
+    app: collab-client
+spec:
+  # Run 2 replicas for redundancy
+  replicas: 2
+  selector:
+    matchLabels:
+      app: collab-client
+  template:
+    metadata:
+      labels:
+        app: collab-client
+    spec:
+      containers:
+      - name: client
+        # Image path must use your Docker Hub username
+        image: chhuzaifamayo/collab-client:latest
+        ports:
+        - containerPort: 80 # Nginx default port
+
+---
+# NodePort Service for External Client Access
+apiVersion: v1
+kind: Service
+metadata:
+  name: collab-client-service
+spec:
+  selector:
+    app: collab-client
+  ports:
+    - protocol: TCP
+      port: 80           # Cluster Port
+      targetPort: 80     # Container Port (Nginx)
+      # NodePort exposes the service on a port range (30000-32767) on your host machine.
+      # You will access the app at http://localhost:30080 (or your Node IP).
+      nodePort: 30080
+  # NodePort is required to expose the service outside the cluster (e.g., on Docker Desktop)
+  type: NodePort

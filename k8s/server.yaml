@@ -1,0 +1,47 @@
+# Deployment for the Node.js Backend Server
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: collab-server-deployment
+  labels:
+    app: collab-server
+spec:
+  # Run 2 replicas for redundancy
+  replicas: 2
+  selector:
+    matchLabels:
+      app: collab-server
+  template:
+    metadata:
+      labels:
+        app: collab-server
+    spec:
+      containers:
+      - name: server
+        # Image path must use your Docker Hub username
+        image: chhuzaifamayo/collab-server:latest
+        ports:
+        - containerPort: 5000
+        # CRITICAL: Add your database and secret environment variables here!
+        env: 
+          - name: NODE_ENV
+            value: "production"
+          # Example for a DB connection (replace with your actual URL/details)
+          # - name: DB_CONNECTION_STRING
+          #   value: "mongodb://your-database-service-name:27017/collab-db"
+
+---
+# ClusterIP Service for Internal Backend Access
+apiVersion: v1
+kind: Service
+metadata:
+  name: collab-server-service
+spec:
+  selector:
+    app: collab-server
+  ports:
+    - protocol: TCP
+      port: 5000         # Internal Cluster Port
+      targetPort: 5000   # Container Port
+  # ClusterIP means the service is only reachable from within the Kubernetes cluster
+  type: ClusterIP
